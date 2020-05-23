@@ -10,21 +10,21 @@ set :pty, true
 
 set :passenger_restart_with_touch, true
 
-set :linked_files, %w{config/database.yml}
+set :linked_files, %w{config/database.yml config/secrets.yml}
 
 set :linked_dirs,  %w{log tmp/pids tmp/cache tmp/sockets public/system public/packs node_modules}
 
-before "deploy:assets:precompile", "deploy:yarn_install"
-namespace :deploy do
-  desc "Run rake yarn install"
-  task :yarn_install do
-    on roles(:web) do
-      within release_path do
-        execute("cd #{release_path} && yarn install --silent --no-progress --no-audit --no-optional")
-      end
-    end
-  end
-end
+# before "deploy:assets:precompile", "deploy:yarn_install"
+# namespace :deploy do
+#   desc "Run rake yarn install"
+#   task :yarn_install do
+#     on roles(:web) do
+#       within release_path do
+#         execute("cd #{release_path} && yarn install --silent --no-progress --no-audit --no-optional")
+#       end
+#     end
+#   end
+# end
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
